@@ -7,7 +7,7 @@ var config = require('./config');
 
 var app = express();
 
-// Why do we use bodyparser.json? What does that do?
+// I know what body parser does, but how do we know when to use it?
 app.use(bodyparser.json());
 app.use(express.static('public'));
 
@@ -38,6 +38,7 @@ if(require.main === module) {
 exports.app = app;
 exports.runServer = runServer;
 
+// Express GET handler
 app.get('/items', function(req, res){
 	Item.find(function(err, items){
 		if(err){
@@ -49,6 +50,7 @@ app.get('/items', function(req, res){
 	});
 });
 
+// Express POST handler
 app.post('/items', function(req, res){
 	Item.create({name: req.body.name}, 
 		function(err, item) {
@@ -61,6 +63,7 @@ app.post('/items', function(req, res){
 	});
 });
 
+// Express PUT handler
 app.put('/items/:id', function(req, res){
 	Item.findOneAndUpdate({_id: req.body.id},
 		{$set: {name: req.body.name}}, {new: true},
@@ -74,6 +77,7 @@ app.put('/items/:id', function(req, res){
 	});
 });
 
+// Express DELETE handler
 app.delete('/items/:id', function(req, res){
 	Item.findOneAndRemove({_id: req.params.id}, {remove: true},
 		function(err, item){
@@ -87,6 +91,7 @@ app.delete('/items/:id', function(req, res){
 	});
 });
 
+// What exactly does this do? and whats with the *?
 app.use('*', function(req, res){
 	res.status(404).json({
 		message: 'Not Found'

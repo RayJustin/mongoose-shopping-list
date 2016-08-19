@@ -14,6 +14,7 @@ chai.use(chaiHttp);
 describe('Shopping List', function(){
 	before(function(done){
 		server.runServer(function(){
+
 			Item.create(
 				// How do I access these and change them if I don't
 				// know their id??
